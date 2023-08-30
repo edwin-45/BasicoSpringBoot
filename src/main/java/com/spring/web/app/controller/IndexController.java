@@ -1,6 +1,9 @@
 package com.spring.web.app.controller;
 
 import com.spring.web.app.models.Usuario;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,9 +19,17 @@ import java.util.Map;
 @RequestMapping("/app")
 public class IndexController {
 
+    @Value("${index.titulo}")
+    private String textoIndex;
+    @Value("${perfil.titulo}")
+    private String textoPerfil;
+
+    @Value("${listar.titulo}")
+    private String textoListar;
+
     @RequestMapping({"/index","/",""})
     public String index(Model model){
-        model.addAttribute("titulo","hola spring framework!!! Model");
+        model.addAttribute("titulo",textoIndex);
 
         return "index";
     }
@@ -31,7 +42,7 @@ public class IndexController {
         usuario.setApellido("Torrado");
         usuario.setEmail("edwin@gmail.com");
         model.addAttribute("usuario",usuario);
-        model.addAttribute("titulo","Perfil del usuario: ".concat(usuario.getNombre()));
+        model.addAttribute("titulo",textoPerfil.concat(usuario.getNombre()));
         return "perfil";
     }
 
@@ -39,7 +50,7 @@ public class IndexController {
     public String listar (Model model) {
 
 
-        model.addAttribute("titulo","Listado de usuario");
+        model.addAttribute("titulo",textoListar);
 
 
         return "listar";
